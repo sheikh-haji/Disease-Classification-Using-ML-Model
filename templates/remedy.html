@@ -1,0 +1,22 @@
+{% include 'includes/default.html' %}
+<body>
+    <div id="temp" style="position: absolute; top:200px;right:150px ;height:400px;width:800px; background-color:lightsteelblue">
+        <form>
+        <span style="font-family:Georgia, 'Times New Roman', Times, serif, sans-serif;font-size: 30px; color:indigo;
+        position: relative;right:0px;left:30px; top:50px">
+
+              {% for todo in list %}
+             <p>{{ todo['name'] }}</p>
+             <br>
+            {{ todo['treatment'] }}
+            {% endfor %}
+
+
+
+            <br>
+        </span>
+        <br>
+        <!-- <button type="submit" class="btn btn-primary" style="padding: 10px;position: relative;left:400px; top:40px" name="search_doctor">Check Info</button> -->
+        </form>
+    </div>
+    </body>
