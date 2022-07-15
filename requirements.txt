@@ -65,13 +65,6 @@ prompt-toolkit
 pycparser
 Pygments
 pymongo
-pyparsing
-pyrsistent
-python-dateutil
-pytz
-pywin32
-pywinpty
-pyzmq
 qtconsole
 QtPy
 requests
