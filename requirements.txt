@@ -1,5 +1,5 @@
 argcomplete
-argon2-cffi=
+argon2-cffi
 attrs==21.2.0
 backcall==0.2.0
 backports.entry-points-selectable==1.1.0
