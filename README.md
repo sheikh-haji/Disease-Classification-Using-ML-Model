@@ -3,7 +3,7 @@
 Python Version > 3.5
 
 ### Description
-This is a disease prediction system based on symptoms build using Machine learning and Flask and mongobd.It also enables nearest hospital searching through Google GeoLocation API,Gecode APT,Places API,JS map API.
+This is a disease classification system based on symptoms build using Machine learning and Flask and mongobd.It also enables nearest hospital searching through Google GeoLocation API,Gecode APT,Places API,JS map API.
 ![image](https://user-images.githubusercontent.com/64357406/179906735-578cab2e-2edf-49f1-ae62-640f5af79149.png)
 ![image](https://user-images.githubusercontent.com/64357406/179906752-8de494af-fae7-4abe-be38-3d7c45a8c5f6.png)
 ![image](https://user-images.githubusercontent.com/64357406/179906788-39937dd1-78f4-4849-b087-ca7f54e774df.png)
