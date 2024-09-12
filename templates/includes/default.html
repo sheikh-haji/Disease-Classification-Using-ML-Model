@@ -8,7 +8,8 @@
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu|Montserrat|Roboto|Pacifico|Mouse+Memoirs|Source+Sans+Pro|Vina+Sans|Coiny|Rethink+Sans:wght@500|Oswald:wght@500" />
+ 
     <!-- Latest compiled and minified JavaScript -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
@@ -27,8 +28,9 @@
 
     /* Center and scale the image nicely */
     background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-repeat: repeat-x;
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
 }
 
 .head {
@@ -89,8 +91,9 @@ align-self: bottom;}
 
     </style>
 
+  
   </head>
-  <body>
+  <body >
     {% block body%}
     <div class="bg">
       <br>
@@ -124,7 +127,7 @@ align-self: bottom;}
           {% for symp in symptoms  %}
           <option value= "{{symp}}">{{symp}}</option>
         {% endfor %}
-      </select> -->
+      </select>-->
       <label for="Symptom1" align="left">Symptom1</label>
       <input type="text" list="symp" multiple="multiple" class="form-control" name="Symptom1">
       <datalist id="symp">
@@ -175,10 +178,17 @@ align-self: bottom;}
   <div class="head">
       Find My Doctor
     </div>
+   
     <form name="Doctor_search" id="DoctorForm" method="POST" action=/find_doctor>
  <input type="text" class="form-control" name="doctor"><br>
- <button type="submit" class="btn btn-primary" style="padding: 10px;" name="search_doctor">Search</button>
+ <button type="submit" class="btn btn-primary" style="padding: 10px;" name="search_doctor" value="1">Search By Location</button>
+ 
  </form>
+ <form  method="POST" action=/find_doctor1 id="myForm">
+ <button type="submit" class="btn btn-primary" style="margin-top:10px;padding:10px;" name="search_doctor_near_me" value="2">Near Me</button>
+
+</form>
+ 
 </div>
 <div id="Drug" class="tabcontent">
   <form name="MedicineForm" id="medForm" method="POST" action=/remedy>

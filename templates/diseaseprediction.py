@@ -5,7 +5,7 @@ import csv,numpy as np,pandas as pd
 import os
 from sklearn import metrics
 
-data = pd.read_csv("templates\Training.csv")
+data = pd.read_csv("Training.csv")
 df = pd.DataFrame(data)
 x = df.drop("prognosis",axis=1)
 y = df['prognosis']

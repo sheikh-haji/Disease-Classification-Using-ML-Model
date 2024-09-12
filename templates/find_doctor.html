@@ -1,354 +1,58 @@
-{% include 'includes/default.html' %}
+<!-- {% include 'includes/default.html' %} -->
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <!-- <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <!-- <script async -->
-        <!-- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZxRH_u7six-bXJng7Vfe8Y-UkMlILC4c&libraries=places&callback=initMap"> -->
-    <!-- </script> -->
-    <script src='https://unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js'></script>
-        <!-- <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhl2O4o94j6erCwD9XGmEmYyCohTXtnfc&libraries=places"></script> -->
-      <!-- <script src="https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyAhl2O4o94j6erCwD9XGmEmYyCohTXtnfc"></script> -->
-      <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js'></script>
-      <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css' rel='stylesheet' />
-      <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
-
-<script type="text/javascript">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     console.log("geocoder")
-//     var geocoder;
-//     console.log("geocoder2")
-// var map;
-// var markerss = Array();
-// var infos = Array();
-// function initMap() {
-//     // prepare Geocoder
-//     console.log("sheikh");
-//     geocoder = new google.maps.Geocoder();
-//     console.log("sheeikh2")
-//     // set initial position CEG
-//     const myCenter={lat:13.0109,lng:80.2354}
-//     var myLatlng = new google.maps.LatLng(myCenter);
-//     var myOptions = { // default map options
-//         zoom: 15,
-//         center: myCenter,
-//         mapTypeId: google.maps.MapTypeId.ROADMAP
-//     };
-//     var marker = new google.maps.Marker({position: myCenter,animation:google.maps.Animation.BOUNCE});
-//     marker.setMap(map)
-//     map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
-// }
-// // clear overlays function
-// function clearOverlays() {
-//     if (markerss) {
-//         for (i in markerss) {
-//             markerss[i].setMap(null);
-//         }
-//         markerss = Array();
-//         infos = Array();
-//     }
-// }
-// // clear infos function
-// function clearInfos() {
-//     if (infos) {
-//         for (i in infos) {
-//             if (infos[i].getMap()) {
-//                 infos[i].close();
-//             }
-//         }
-//     }
-// }
-// // find address function
-// function getLocation() {
-//   if (navigator.geolocation) {
-//     navigator.geolocation.getCurrentPosition(showPosition,handleError);
-//   } else {
-//     alert("Geolocation is not supported by this browser.");
-//   }
-// }
-
-// function showPosition(position) {
-//    var lat = position.coords.latitude;
-//    var lng = position.coords.longitude;
-//    myLatLng = {
-//                 lat: lat,
-//                 lng: lng
-//             };
-            
-//   map.setCenter(new google.maps.LatLng(lat, lng));
-// //   alert("helloworld");
-
-//   document.getElementById('lat').value = lat;
-//   document.getElementById('lng').value = lng;
-//   console.log("geolocating");
-//   console.log( document.getElementById('lat').value);
-//   console.log( document.getElementById('lng').value);
-  
-//   var addrMarker = new google.maps.Marker({position: myLatLng,map:map,animation:google.maps.Animation.BOUNCE});
-//    findPlaces();
-// }
-// function handleError(error) {
-    
-//     switch (error.code) {
-//         case 1:
-//             alert("User denied the request for Geolocation.");
-//             break;
-//         case 2:
-//             alert("Location information is unavailable. Please ensure Location is On");
-//             break;
-//         case 3:
-//             alert("timeout");
-//             break;
-//         case 4:
-//             alert("An unknown error occurred.");
-//             break;
-//     }
-// }
-
-
-
-// function findAddress() {
-//     var address = '{{location}}';
-//     console.log(address);
-//     // script uses our 'geocoder' in order to find location by address name
-//     geocoder.geocode( { 'address': address}, function(results, status) {
-//         if (status == google.maps.GeocoderStatus.OK) { // and, if everything is ok
-//             // we will center map
-//             var addrLocation = results[0].geometry.location;
-//             map.setCenter(addrLocation);
-//             // store current coordinates into hidden variables
-//             document.getElementById('lat').value = results[0].geometry.location.lat();
-//             document.getElementById('lng').value = results[0].geometry.location.lng();
-//             console.log("geocoding");
-//   console.log( document.getElementById('lat').value);
-//   console.log( document.getElementById('lng').value);
-//             // and then - add new custom marker
-//             var addrMarker = new google.maps.Marker({
-//                 position: addrLocation,
-//                 map: map,
-//                 title: results[0].formatted_address,
-//                 animation:google.maps.Animation.BOUNCE
-//             });
-//         } else {
-//             // alert('Geocode was not successful for the following reason: ' + status);
-//             // const myCenter={lat:13.0109,lng:80.2354}
-//             // getLocation();
-//             // var latitude = 13.0109;
-//             // var longitude = 80.2354;
-//             // myLatLng = {
-//                 // lat: latitude,
-//                 // lng: longitude
-//             // };
-            
-//             // document.getElementById('lat').value = latitude;
-//             // document.getElementById('lng').value = longitude;
-//             // var addrMarker = new google.maps.Marker({position: myCenter,map:map,animation:google.maps.Animation.BOUNCE});
-//             // return;
-
-//             // Using Geolocate API To get my current location
-//              getLocation();
-//              return;
-//         }
-//         findPlaces();
-//     });
-// }
-// // find custom places function
-// function findPlaces() {
-//     // prepare variables (filter)
-//     var lat = document.getElementById('lat').value;
-//     var lng = document.getElementById('lng').value;
-//     console.log("findplaces");
-//   console.log( document.getElementById('lat').value);
-//   console.log( document.getElementById('lng').value);
-//     var cur_location = new google.maps.LatLng(lat, lng);
-//     // prepare request to Places
-//     var request = {
-//         location: cur_location,
-//         radius: 4000,
-//         types: ['hospital','doctor']
-//     };
-
-//     // send request
-//     service = new google.maps.places.PlacesService(map);
-//     service.nearbySearch(request, createMarkers);
-// }
-// // create markers (from 'findPlaces' function)
-// function createMarkers(results, status) {
-//     if (status == google.maps.places.PlacesServiceStatus.OK) {
-//         // if we have found something - clear map (overlays)
-//         clearOverlays();
-//         // and create new markers by search result
-//         for (var i = 0; i < results.length; i++) {
-//             createMarker(results[i]);
-//             // console.log(results[i]);
-//         }
-//     } else if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-//         alert('Sorry, nothing is found');
-//     }
-// }
-// // creare single marker function
-// function createMarker(obj) {
-//     // prepare new Marker object
-//     var mark = new google.maps.Marker({
-//         position: obj.geometry.location,
-//         map: map,
-//         title: obj.name
-//     });
-//     console.log(obj.name);
-//     markerss.push(mark);
-//     // console.log("here2");
-//     // prepare info window
-//     var infowindow = new google.maps.InfoWindow({
-//         content: '<img src="' + obj.icon + '" /><font style="color:#000;">' + obj.name +
-//         '<br />Rating: ' + obj.rating + '<br />Vicinity: ' + obj.vicinity + '</font>'
-//     });
-//     // add event handler to current marker
-//     google.maps.event.addListener(mark, 'click', function(event) {
-//         clearInfos();
-//         infowindow.open(map,mark);
-//         var lat = document.getElementById('lat').value;
-//     var lng = document.getElementById('lng').value;
-//         var str="https://www.google.com/maps/dir/"
-//         str+=lat;
-//         str+=",";
-//         str+=lng;
-//         str+="/";
-//         var temp=obj.geometry.location;
-//         str+=event.latLng.lat();
-//         str+=","
-//         str+=event.latLng.lng()
-//         // console.log(mark.position)
-        
-//         // console.log(str);
-//         window.open(str);
-//     });
-//     infos.push(infowindow);
-// }
-// // initialization
-// // google.maps.event.addDomListener(window, 'load', initialize);
-// document.getElementById("doctortab").click();
+<link href="{{ url_for('static', filename='OlaMapsWebSDK/OlaMapsWebSDK/style.css') }} " rel="stylesheet" />
+<script src="/static/OlaMapsWebSDK/OlaMapsWebSDK/olamaps-js-sdk.umd.js"></script>
+</head>
 
     </script>
 
 </head>
-<!-- <body  onload="findAddress()"> -->
-    <body>
-        <div id="map" style="position: absolute; top:200px;right:20px ;height:400px;width:800px">
-        </div>
-        <input type="hidden" id="lat" name="lat" value="18.9682846" />
-        <input type="hidden" id="lng" name="lng" value="72.8311396" />
-        <input type="hidden" id="fname" value="{{location}}"></input>
-        
 
-<style>
-#geocoder-container > div {
-min-width: 50%;
-margin-left: 25%;
-}
-</style>
-    <div id='map' style='width: 400px; height: 300px;'></div>
-    <input type="hidden" id="fname" value=<%=item1%>></input>
-    <script>
-      mapboxgl.accessToken ="pk.eyJ1Ijoic2hlaWtoMTE4IiwiYSI6ImNsNWtwaWJlbjBhaTEzcGp2M21vYXk0amEifQ.WWwrnJ23ZEs7RsEGY5Ywig";
+    <body >
+        <div id="map" style=" position:absolute;right:30px;top:200px;height:490px;width:800px;">
 
-    // console.log(mapboxgl.accessToken);
-    const element = document.getElementById("fname");
-  console.log(element.getAttributeNode("value").value);
-    // var client = new MapboxClient(mapboxgl.accessToken);
-    // console.log(client);
-    // console.log(<%=item1%>);
-    // var address = element.getAttributeNode("value").value;
-   // console.log(address);
-//    if(address.length!==0){
-//     var test = client.geocodeForward(address, function(err, data, res) {
-//       // data is the geocoding result as parsed JSON
-//       // res is the http response, including: status, headers and entity properties
-//       if(err){
-        var coordinates = [80.103763,13.113779];
-
-        var map = new mapboxgl.Map({
-          container: 'map',
-          style: 'mapbox://styles/mapbox/streets-v10',
-          center: coordinates,
-          zoom: 10
-        });
-        new mapboxgl.Marker()
-          .setLngLat(coordinates)
-          .addTo(map);
-          map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-          map.addControl(
-new mapboxgl.GeolocateControl({
-positionOptions: {
-enableHighAccuracy: true
-},
-// When active the map will receive updates to the device's location as it changes.
-trackUserLocation: true,
-// Draw an arrow next to the location dot to indicate which direction the device is heading.
-showUserHeading: true
+          <script>
+          const olaMaps = new OlaMapsSDK.OlaMaps({
+  apiKey: 'UkUs3JeMNDj7LCtp5b23WQCZXC6qdoIaxqwCaXhn',
 })
-);
-map.addControl(
-new MapboxGeocoder({
-accessToken: mapboxgl.accessToken,
-mapboxgl: mapboxgl
-}),"top-left"
-);
-          
-    //   }
-    //   else{
-    //   console.log(res);
-    //   console.log(res.url);
-    //   console.log(data);
+          const myMap = olaMaps.init({
+            style: "https://api.olamaps.io/tiles/vector/v1/styles/default-light-standard/style.json",
+            container: 'map',
+            center: [Number("{{lng}}"),Number("{{lat}}")],
+            zoom: 13,
+          })
+          const popup = olaMaps.addPopup({ offset: [0, -30], anchor: 'bottom' }).setHTML('<div>This is Place Of Search</div>')
 
-    //   var coordinates = data.features[0].center;
+          olaMaps
+  .addMarker({ offset: [0], offset: [0, -10], anchor: 'bottom',color:'red'})
+  .setLngLat([Number("{{lng}}"),Number("{{lat}}")])
+  .setPopup(popup)
+  .addTo(myMap)
+  </script> 
 
-    //   var map = new mapboxgl.Map({
-    //     container: 'map',
-    //     style: 'mapbox://styles/mapbox/streets-v10',
-    //     center: coordinates,animate:true,
-    //     zoom: 10
-    //   });
-    //   new mapboxgl.Marker()
-    //     .setLngLat(coordinates)
-    //     .addTo(map);}
-
-
-    // });}
-    // else{
-    //   var coordinates = [80.103763,13.113779];
-
-    //   var map = new mapboxgl.Map({
-    //     container: 'map',
-    //     style: 'mapbox://styles/mapbox/streets-v10',
-    //     center: coordinates,
-    //     zoom: 10
-    //   });
-    //   new mapboxgl.Marker()
-    //     .setLngLat(coordinates)
-    //     .addTo(map);
-    // }
-    </script>
+     
+        </div>
+        <div  style="position:relative;top:30px;font-family:Source Sans Pro;font-size:2.3rem;color:black;">
+          <h2 style="margin-left:25%;font-weight: bold;">Hospital NearBy</h2>
+          <ul>
+            <!-- {% for item in list_hospital %}
+                <li>{{ item}}</li>
+                {% endfor %}
+                 -->
+                 <ul>
+                  {% for item, link in hospital_data %}
+                      <li><a href="{{ link }}" style="color:black;" target="_blank">{{ item }}</a></li>
+                  {% endfor %}
+              </ul>
+            </ul>
+        </div>
         
-        <!-- <input type="hidden" value="{{location}}" id="location" name='location'> -->
 
+
+        
+
+
+    
+        
+       
 </body>
