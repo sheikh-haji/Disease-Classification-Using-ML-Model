@@ -87,35 +87,9 @@ align-self: bottom;}
 #Drug {background-color: #78A9FD; width: 600px;top:45px ;left: 50px}
 
     </style>
- <script>
- function noGeolocation(){
-  console.log("For Some reason we are unable to fetch your location.Sorry again Sometime.");
-}
-function myFunction(){
-
-  if(!navigator.geolocation || !document.querySelector){
-    noGeolocation();
-    document.getElementById("myForm").submit();
-  }
-  else{
-    navigator.geolocation.getCurrentPosition(
-      function(p){
-        document.querySelector("[name='long']").value=p.coords.longitude;
-        document.querySelector("[name='lat']").value=p.coords.latitude;
-        document.getElementById("myForm").submit();
-        // document.querySelector("[type='submit']").
-      },
-      function(p){
-               noGeolocation();
-               document.getElementById("myForm").submit();
-      },{timeout: 9000, maximumAge: 0, enableHighAccuracy: true}
-    )
-  }
-}
-
-</script>
+ 
   </head>
-  <body onload="myFunction()">
+  <body>
     {% block body%}
     <div class="bg">
       <br>
@@ -204,7 +178,7 @@ function myFunction(){
  <input type="text" class="form-control" name="doctor"><br>
  <button type="submit" class="btn btn-primary" style="padding: 10px;" name="search_doctor" value="1">Search By Location</button>
  </form>
- <form name="Doctor_search" id="DoctorForm" method="POST" action=/find_doctor1>
+ <form name="myForm" id="myForm" method="POST" action=/find_doctor1>
  <button type="submit" class="btn btn-primary" style="margin-top:10px;padding:10px;" name="search_doctor_near_me" value="2">Near Me</button>
  <input type="hidden" name="long" value="0"></input>
  <input type="hidden" name="lat"  value="0"></input> 

@@ -24,6 +24,18 @@ print ("Decision Tree Acurracy: ", clf_dt.score(x_test,y_test))
 #         symptoms = symptoms[:len(symptoms)-1]
 
 #NAIVE BAYES
+# Bayes’ Theorem
+# Bayes’ Theorem finds the probability of an event occurring given the probability of another event that has already occurred. Bayes’ theorem is stated mathematically as the following equation:
+
+
+# where A and B are events and P(B) ≠ 0
+# P(A∣B)= P(B∣A)P(A)/P(B)
+
+# Basically, we are trying to find probability of event A, given the event B is true. Event B is also termed as evidence.
+# P(A) is the priori of A (the prior probability, i.e. Probability of event before evidence is seen). The evidence is an attribute value of an unknown instance(here, it is event B).
+# P(B) is Marginal Probability: Probability of Evidence.
+# P(A|B) is a posteriori probability of B, i.e. probability of event after evidence is seen.
+# P(B|A) is Likelihood probability i.e the likelihood that a hypothesis will come true based on the evidence.
 from sklearn.naive_bayes import GaussianNB
 model=GaussianNB()
 model.fit(x_train,y_train)
@@ -32,6 +44,7 @@ Y2=metrics.accuracy_score(y_test,y_pred)
 print("Naive Bayes Accuracy:",metrics.accuracy_score(y_test,y_pred))
 #SVM
 #Import svm model
+# dividing using hyperplane
 from sklearn import svm
 clf = svm.SVC(kernel='linear') # Linear Kernel
 clf.fit(x_train, y_train)

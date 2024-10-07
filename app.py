@@ -37,11 +37,11 @@ with open("Training.csv", newline='') as f:
 
 @app.route('/', methods=['GET'])
 def dropdown():
-        return render_template('home.html', symptoms=symptoms,disease_array=disease_array)
+        return render_template('home1.html', symptoms=symptoms,disease_array=disease_array)
 
 @app.route('/about', methods=['GET'])
 def about():
-    return render_template('about.html')
+    return render_template('about1.html')
 
 @app.route('/disease_predict', methods=['POST'])
 def disease_predict():
@@ -63,7 +63,7 @@ def disease_predict():
     #     disease_list.append(disease)
     # return render_template('disease_predict.html',disease_list=disease_list)
     if(len(selected_symptoms)==0):
-        return render_template('home.html', symptoms=symptoms,disease_array=disease_array)
+        return render_template('home1.html', symptoms=symptoms,disease_array=disease_array)
 
     disease = diseaseprediction.dosomething(selected_symptoms)
     if(disease==''):
@@ -100,7 +100,7 @@ def get_location():
                 list_hospital.append(item)
         if json_data1['status']=="ok":
             for i in json_data1["predictions"]:
-                item="https://www.google.com/maps/dir/"+i["description"]
+                item="https://www.google.com/maps/dir/"+str(lat)+','+str(lng)+"/"+i["description"]
                 direction_hospital.append(item)
                 print(item)
        
@@ -142,7 +142,7 @@ def get_location1():
             list_hospital.append(item)
     if json_data1['status']=="ok":
         for i in json_data1["predictions"]:
-            item="https://www.google.com/maps/dir/"+i["description"]
+            item="https://www.google.com/maps/dir/"+str(lat)+','+str(lng)+"/"+i["description"]
             direction_hospital.append(item)
             print(item)
     hospital_data = zip(list_hospital, direction_hospital)

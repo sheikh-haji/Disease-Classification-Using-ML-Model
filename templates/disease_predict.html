@@ -1,15 +1,229 @@
-{% include 'includes/default.html' %}
-<body>
-    <div id="prediction" style="position: absolute; top:200px;right:20px ;height:400px;width:800px; background-color:lightsteelblue">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Disease Predictor</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+
+    <!-- Optional Bootstrap theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous">
+
+    <style type="text/css">
+      body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+      }
+      .bg {
+        /* background-image: url("/../static/bg.jpg"); */
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: #d3d3d3;
+        background-size: cover;
+        position: relative;
+      }
+      .overlay {
+        background-color: rgba(0, 0, 0, 0.6); /* Transparent overlay */
+        height: 100%;
+        padding: 20px;
+      }
+      .content {
+        color: white;
+        text-align: center;
+        font-size: 1.5rem;
+        padding: 10px;
+      }
+      .head {
+        color: white;
+        font-family: sans-serif;
+        font-size: 35px;
+        border-bottom: double;
+        text-align: center;
+        padding: 10px;
+      }
+      nav.navbar {
+        margin-bottom: 0;
+        border-radius: 0;
+        background-color: #19518a;
+      }
+      .navbar-nav {
+        float: none;
+        display: flex;
+        justify-content: center;
+      }
+      .navbar-nav li a {
+        
+        font-weight: bold;
+        font-size: 16px;
+        color:black;
+        padding: 10px 20px;
+      }
+      .tablink {
+        background-color: #FEA127;
+        color: white;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        width: 33.33%; /* Makes the tabs occupy full width */
+      }
+      .tablink:hover {
+        background-color: green;
+      }
+      .tabcontent {
+        color: black;
+        display: none;
+        padding: 20px;
+        width: 100%;
+      }
+      .form-group {
+        margin-top: 20px;
+      }
+      .tabcontent form label {
+        color: white;
+      }
+      .tabcontent form input[type="text"] {
+        background-color: white;
+        color: black;
+        margin-bottom: 10px;
+        width: 60%;  /* Limits input width */
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+      #footer {
+        background-color: black;
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="bg">
+      <div class="overlay">
+        <div>
+          <center>
+            <img src="/../static/logo.png" style="height:70px; width: 70px;" />
+            <span style="font-size:50px; text-shadow: 3px 3px 6px #40e0d0; font-weight: bolder; font-family:'Garamond'; color:blue;">
+                Smart Healthcare: Disease Classification and Hospital Locator Web Application
+            </span>
+          </center>
+        </div>
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav">
+              <li><a href="/">HOME</a></li>
+              <li><a href="/about">ABOUT US</a></li>
+            </ul>
+          </div>
+        </nav>
+        
+        <!-- Tabs for Symptom, Doctor, and Remedy -->
+        <div class="content">
+          <button class="tablink" onclick="openTab('Symptom', this, 'red')" id="defaultOpen">Symptom Checker</button>
+          <button class="tablink" onclick="openTab('Doctor', this, 'red')">Find My Doctor</button>
+          <button class="tablink" onclick="openTab('Drug', this, 'red')">Remedy</button>
+        </div>
+
+        <!-- Symptom Checker Section -->
+        <div id="Symptom" class="tabcontent" style="width: 45%; margin: 20px auto 0;">
+          <form name="SymptomForm" id="SymForm" method="POST" action="/disease_predict">
+            <div class="head">
+              Symptom Checker
+            </div>
+            <div class="form-group" style="font-size: 2.3rem;">
+              <!-- Add 5 symptoms input fields -->
+              <label for="Symptom1" >Symptom 1</label>
+              <input type="text" list="symp" class="form-control" name="Symptom1" placeholder="Enter Symptom 1">
+              <label for="Symptom2">Symptom 2</label>
+              <input type="text" list="symp" class="form-control" name="Symptom2" placeholder="Enter Symptom 2">
+              <label for="Symptom3">Symptom 3</label>
+              <input type="text" list="symp" class="form-control" name="Symptom3" placeholder="Enter Symptom 3">
+              <label for="Symptom4">Symptom 4</label>
+              <input type="text" list="symp" class="form-control" name="Symptom4" placeholder="Enter Symptom 4">
+              <label for="Symptom5">Symptom 5</label>
+              <input type="text" list="symp" class="form-control" name="Symptom5" placeholder="Enter Symptom 5">
+              <!-- Options for symptoms -->
+              <datalist id="symp">
+                {% for symp in symptoms %}
+                <option value="{{symp}}">{{symp}}</option>
+                {% endfor %}
+              </datalist>
+            </div>
+            <button type="submit" class="btn btn-primary" style="padding: 10px; font-size: 2.4rem;">Check</button>
+          </form>
+        </div>
+
+        <!-- Doctor Finder Section -->
+        <div id="Doctor" class="tabcontent" style="width: 45%; margin: 20px auto 0; font-size: 2.3rem;">
+          <div class="head">
+            Find My Doctor
+          </div>
+          <form name="Doctor_search" id="DoctorForm" method="POST" action="/find_doctor">
+            <input type="text" class="form-control" style="margin-top: 5%;" style="font-style: 2.3rem;"  name="doctor" placeholder="Enter Location"><br>
+            <button type="submit" class="btn btn-primary" style="padding: 10px;">Search By Location</button>
+          </form>
+          <form name="myForm" id="myForm" method="POST" action="/find_doctor1">
+            <button type="submit" class="btn btn-primary" style="margin-top:10px;padding:10px;">Near Me</button>
+            <input type="hidden" name="long" value="0">
+            <input type="hidden" name="lat" value="0">
+          </form>
+        </div>
+
+        <!-- Remedy Section -->
+        <div id="Drug" class="tabcontent" style="width: 45%; margin: 20px auto 0;font-size: 2.3rem;">
+          <form name="MedicineForm" id="medForm" method="POST" action="/remedy">
+            <div class="head">
+              Remedy
+            </div>
+            <div class="form-group" >
+              <label for="medicine">Enter Disease Name</label>
+              <input type="text" list="disease_list" class="form-control" style="font-style: 2.3rem;"name="medicine" placeholder="Enter Disease">
+              <datalist id="disease_list">
+                {% for disease in disease_array %}
+                <option value="{{disease}}">{{disease}}</option>
+                {% endfor %}
+              </datalist>
+            </div>
+            <button class="btn btn-primary" type="submit">Know about it</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="prediction" style="margin-left:30%;position: absolute;text-align: center;font-size: 3.0rem; top:80%;height:10px;width:850px;">
         <form>
-        <span style="font-family:Georgia, 'Times New Roman', Times, serif, sans-serif;font-size: 30px; color:indigo;
-        position: relative;left:120px; top:50px">
-            <br>   There are chances you may have<br>
-            {{disease[0]}}
-            <br>
+        <span style="font-family:Georgia, 'Times New Roman', Times, serif, sans-serif;font-size: 5.0rem; color:white;">
+               There are chances you may have {{disease[0]}}.
+            
         </span>
         <br>
         <!-- <button type="submit" class="btn btn-primary" style="padding: 10px;position: relative;left:400px; top:40px" name="search_doctor">Check Info</button> -->
         </form>
-    </div>
-    </body>
+
+    <script>
+      function openTab(tabName, elmnt, color) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].style.backgroundColor = "";
+        }
+        document.getElementById(tabName).style.display = "block";
+        elmnt.style.backgroundColor = color;
+      }
+      // Open default tab on load
+      document.getElementById("defaultOpen").click();
+    </script>
+  </body>
+</html>

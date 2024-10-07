@@ -106,7 +106,7 @@
     </style>
   </head>
   <body>
-    
+    {% block body%}
     <div class="bg">
       <div class="overlay">
         <div>
@@ -128,9 +128,9 @@
         
         <!-- Tabs for Symptom, Doctor, and Remedy -->
         <div class="content">
-          <button class="tablink" onclick="openTab('Symptom', this, 'red')" >Symptom Checker</button>
+          <button class="tablink" onclick="openTab('Symptom', this, 'red')" id="defaultOpen">Symptom Checker</button>
           <button class="tablink" onclick="openTab('Doctor', this, 'red')">Find My Doctor</button>
-          <button class="tablink" onclick="openTab('Drug', this, 'red')" id="defaultOpen">Remedy</button>
+          <button class="tablink" onclick="openTab('Drug', this, 'red')">Remedy</button>
         </div>
 
         <!-- Symptom Checker Section -->
@@ -198,19 +198,6 @@
         </div>
       </div>
     </div>
-    <div id="temp" style="margin-left:30%;position: absolute;text-align: center;font-size: 3.0rem; top:40%;height:10px;width:850px;">
-        <form>
-        <span style="font-family:Georgia, 'Times New Roman', Times, serif, sans-serif;font-size: 3.0rem; color:white;">
-            {% for todo in list %}
-            <p style="color: white;">{{ todo['name'] }}</p>
-            {{ todo['treatment'] }}
-            <br>
-        {% endfor %}
-            
-        </span>
-        <br>
-        <!-- <button type="submit" class="btn btn-primary" style="padding: 10px;position: relative;left:400px; top:40px" name="search_doctor">Check Info</button> -->
-        </form>
 
     <script>
       function openTab(tabName, elmnt, color) {
@@ -229,6 +216,6 @@
       // Open default tab on load
       document.getElementById("defaultOpen").click();
     </script>
+    {% endblock %}
   </body>
 </html>
-

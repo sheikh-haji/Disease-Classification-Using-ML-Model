@@ -90,8 +90,6 @@ align-self: bottom;}
 #Drug {background-color: #78A9FD; width: 600px;top:45px ;left: 50px}
 
     </style>
-
-  
   </head>
   <body >
     {% block body%}
@@ -184,10 +182,11 @@ align-self: bottom;}
  <button type="submit" class="btn btn-primary" style="padding: 10px;" name="search_doctor" value="1">Search By Location</button>
  
  </form>
- <form  method="POST" action=/find_doctor1 id="myForm">
- <button type="submit" class="btn btn-primary" style="margin-top:10px;padding:10px;" name="search_doctor_near_me" value="2">Near Me</button>
-
-</form>
+ <form name="myForm" id="myForm" method="POST" action=/find_doctor1>
+  <button type="submit" class="btn btn-primary" style="margin-top:10px;padding:10px;" name="search_doctor_near_me" value="2">Near Me</button>
+  <input type="hidden" name="long" value="0"></input>
+  <input type="hidden" name="lat"  value="0"></input> 
+ </form>
  
 </div>
 <div id="Drug" class="tabcontent">
