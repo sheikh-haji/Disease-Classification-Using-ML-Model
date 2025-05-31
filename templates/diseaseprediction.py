@@ -1,88 +1,88 @@
-from sklearn.tree import DecisionTreeClassifier
+import pandas as pd
+import numpy as np
+import csv
+from collections import defaultdict
+
 from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
-import csv,numpy as np,pandas as pd
-import os
+from sklearn import svm
 from sklearn import metrics
 
-data = pd.read_csv("Training.csv")
-df = pd.DataFrame(data)
-x = df.drop("prognosis",axis=1)
-y = df['prognosis']
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.978, random_state=0)
-
-#DESCISION TREE
-#print ("DecisionTree")
-dt = DecisionTreeClassifier()
-clf_dt=dt.fit(x_train,y_train)
-Y1=clf_dt.score(x_test,y_test)
-print ("Decision Tree Acurracy: ", clf_dt.score(x_test,y_test))
-
-# with open('templates/Testing.csv', newline='') as f:
-#         reader = csv.reader(f)
-#         symptoms = next(reader)
-#         symptoms = symptoms[:len(symptoms)-1]
-
-#NAIVE BAYES
-from sklearn.naive_bayes import GaussianNB
-model=GaussianNB()
-model.fit(x_train,y_train)
-y_pred=model.predict(x_test)
-Y2=metrics.accuracy_score(y_test,y_pred)
-print("Naive Bayes Accuracy:",metrics.accuracy_score(y_test,y_pred))
-#SVM
-#Import svm model
-from sklearn import svm
-clf = svm.SVC(kernel='linear') # Linear Kernel
-clf.fit(x_train, y_train)
-Y_pred = clf.predict(x_test)
-Y3=metrics.accuracy_score(y_test,y_pred)
-print("Support Vector Accuracy:",metrics.accuracy_score(y_test,y_pred))
-
-#RANDOM FOREST CLASSIFIER
-rf_model = RandomForestClassifier(random_state=18)
-rf_model.fit(x_train, y_train)
-preds = rf_model.predict(x_test)
-Y4=metrics.accuracy_score(y_test,y_pred)
-print("Random Forest Acuuracy:",metrics.accuracy_score(y_test,y_pred))
-
-
-indices = [i for i in range(132)]
-symptoms = df.columns.values[:-1]
-
-dictionary = dict(zip(symptoms,indices))
-
 def dosomething(symptom):
+    print("sheikh ameenulnhai")
     user_input_symptoms = symptom
     user_input_label = [0 for i in range(132)]
     for i in user_input_symptoms:
         idx = dictionary[i]
         user_input_label[idx] = 1
 
-    user_input_label = np.array(user_input_label)
-    user_input_label = user_input_label.reshape((-1,1)).transpose()
-    if(len(user_input_label)==0):
-        return 
-    X1=dt.predict(user_input_label)
-    X2=model.predict(user_input_label)
-    X3=clf.predict(user_input_label)
-    if Y1>=Y2 and Y1>=Y3 and Y1>=Y4:
-        return X1;
-    
-    if Y3>=Y2 and Y3>=Y1 and Y3>=Y4:
-        return X3;
-    
-    if Y2>=Y1 and Y2>=Y3 and Y2>=Y4:
-        return X2;
-    
-    if Y4>=Y1 and Y4>=Y2 and Y4>=Y2:
-        return X3
-    
-    return(dt.predict(user_input_label))
+    user_input_label = pd.DataFrame([user_input_label], columns=x.columns)
 
-# print(dosomething(['headache','muscle_weakness','puffy_face_and_eyes','mild_fever','skin_rash']))
-# prediction = []
-# for i in range(7):
-#     pred = dosomething(['headache'])   
-#     prediction.append(pred) 
-# print(prediction)
+
+    if len(user_input_label) == 0:
+        return 
+    
+    X1 = dt.predict(user_input_label)
+    X2 = model.predict(user_input_label)
+    X3 = clf.predict(user_input_label)
+    X4 = rf_model.predict(user_input_label)
+
+    vote_dict = defaultdict(int)
+    for prediction in [X1, X2, X3, X4]:
+        vote_dict[prediction[0]] += 1
+
+    final_prediction = max(vote_dict, key=vote_dict.get)
+    print("Final Prediction:", final_prediction)
+    return final_prediction
+
+
+def main():
+    # Load and prepare the data
+    data = pd.read_csv("Training.csv")
+    df = pd.DataFrame(data)
+
+    global dt, model, clf, rf_model, dictionary  # make models and dict available in dosomething()
+
+    x = df.drop("prognosis", axis=1)
+    y = df["prognosis"]
+
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=42)
+
+    # Decision Tree
+    dt = DecisionTreeClassifier()
+    dt.fit(x_train, y_train)
+    y_pred_dt = dt.predict(x_test)
+    print("Decision Tree Accuracy:", metrics.accuracy_score(y_test, y_pred_dt))
+
+    # Naive Bayes
+    model = GaussianNB()
+    model.fit(x_train, y_train)
+    y_pred_nb = model.predict(x_test)
+    print("Naive Bayes Accuracy:", metrics.accuracy_score(y_test, y_pred_nb))
+
+    # SVM
+    clf = svm.SVC(kernel='linear')
+    clf.fit(x_train, y_train)
+    y_pred_svm = clf.predict(x_test)
+    print("SVM Accuracy:", metrics.accuracy_score(y_test, y_pred_svm))
+
+    # Random Forest
+    rf_model = RandomForestClassifier(random_state=42)
+    rf_model.fit(x_train, y_train)
+    y_pred_rf = rf_model.predict(x_test)
+    print("Random Forest Accuracy:", metrics.accuracy_score(y_test, y_pred_rf))
+
+    # Symptom Index Dictionary
+    symptoms = df.columns.values[:-1]
+    dictionary = dict(zip(symptoms, range(132)))
+
+    # Call dosomething from main
+    test_symptoms = ['headache', 'muscle_weakness', 'puffy_face_and_eyes', 'mild_fever', 'skin_rash']
+    prediction = dosomething(test_symptoms)
+    print("Predicted disease for input symptoms:", prediction)
+
+
+if __name__ == "__main__":
+    main()
